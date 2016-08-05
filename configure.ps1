@@ -25,8 +25,7 @@ $domain = "example.local"
 $usernamedomain = "example\administrador"
 
 # Password do usuário com permissão para adicionar no domínio
-$passworddomain = "" | ConvertTo-SecureString -asPlainText -Force
-
+$passworddomain = ""
 
 
 
@@ -50,7 +49,8 @@ net user administrador /active:yes
 }
 
 if ($addtodomain){
-$credential = New-Object System.Management.Automation.PSCredential($usernamedomain,$passworddomain)
+$passworddomainsec = $passworddomain | ConvertTo-SecureString -asPlainText -Force
+$credential = New-Object System.Management.Automation.PSCredential($usernamedomain,$passworddomainsec)
 Add-Computer -DomainName $domain -Credential $credential
 }
 
