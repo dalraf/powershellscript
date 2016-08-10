@@ -37,7 +37,9 @@ Get-WmiObject -Class Win32_Product | where {$_.Vendor -like "*$programremove*"} 
 
 iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 
-mkdir $chocolateycache
+if(!(Test-Path -Path $chocolateycache )){
+    New-Item -ItemType directory -Path $chocolateycache
+}
 
 foreach($programadd in $programsadd){
 choco install -c $chocolateycache -y $programadd
